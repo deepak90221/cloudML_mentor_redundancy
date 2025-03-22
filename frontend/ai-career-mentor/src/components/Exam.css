@@ -1,0 +1,110 @@
+/* General Exam Container */
+.exam-container {
+    max-width: 950px; /* Wider format */
+    margin: 60px auto;
+    padding: 40px;
+    background: linear-gradient(135deg, #f0f4f8, #d9e2ec); /* Soft gradient */
+    color: #2c3e50;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Exam Title */
+  .exam-title {
+    font-size: 30px;
+    font-weight: bold;
+    color: #1c3d5a;
+    margin-bottom: 20px;
+  }
+  
+  /* Exam Description */
+  .exam-description {
+    font-size: 18px;
+    margin-bottom: 30px;
+    color: #4a4a4a;
+  }
+  
+  /* Terms & Conditions Section */
+  .terms-section, .marking-section {
+    text-align: left;
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Section Titles */
+  .terms-section h2, .marking-section h2 {
+    font-size: 22px;
+    color: #1c3d5a;
+    border-bottom: 2px solid #0073e6;
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+  }
+  
+  /* List Items */
+  .terms-section ul, .marking-section ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .terms-section li, .marking-section li {
+    padding: 10px 0;
+    font-size: 17px;
+    color: #333;
+  }
+  
+  /* Terms Checkbox Container */
+  .terms-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 25px 0;
+  }
+  
+  .terms-container input {
+    transform: scale(1.4);
+    cursor: pointer;
+  }
+  
+  .terms-container label {
+    font-size: 17px;
+    color: #2c3e50;
+    cursor: pointer;
+  }
+  
+  .terms-container a {
+    color: #0073e6;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .terms-container a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Start Exam Button */
+  .start-exam-btn {
+    padding: 15px 30px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    background: #1c3d5a;
+    border: none;
+    border-radius: 8px;
+    cursor: not-allowed;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .start-exam-btn.active {
+    background: #0073e6;
+    cursor: pointer;
+  }
+  
+  .start-exam-btn.active:hover {
+    background: #005bb5;
+  }
+  

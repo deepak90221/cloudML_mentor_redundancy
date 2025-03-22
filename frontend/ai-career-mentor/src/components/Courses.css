@@ -1,0 +1,108 @@
+/* Search Bar */
+.search-container {
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.search-bar {
+    width: 60%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 2px solid #1e40af; /* Darker blue */
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s ease;
+    background-color: #f9f9f9; /* Light gray background */
+    color: #111; /* Darker text */
+}
+
+.search-bar:focus {
+    border-color: #1e3a8a; /* Darker blue */
+}
+
+/* AI Suggestion Text */
+.suggestion {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #222; /* Stronger contrast */
+    font-style: italic;
+}
+
+/* Courses Grid */
+.courses-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Course Card */
+.course-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover Effect */
+.course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Title */
+.course-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #111; /* Darker text */
+    margin-bottom: 10px;
+}
+
+/* Description */
+.course-description {
+    font-size: 1rem;
+    color: #222; /* Darker text for readability */
+    margin-bottom: 15px;
+}
+
+/* Button */
+.course-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #1e40af; /* Darker blue */
+    color: white;
+    text-align: center;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.course-button:hover {
+    background-color: #1e3a8a;
+}
+
+/* Responsive Grid */
+@media (max-width: 1200px) {
+    .courses-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .courses-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .courses-container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

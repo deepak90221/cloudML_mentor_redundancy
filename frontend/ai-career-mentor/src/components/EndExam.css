@@ -1,0 +1,65 @@
+/* Full-screen centered container */
+.end-exam-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f5f5f5; /* Soft light gray */
+  }
+  
+  /* Stylish Card for the End Exam Screen */
+  .end-exam-card {
+    background: #ffffff;
+    padding: 40px;
+    width: 420px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+    border: 1px solid #ddd; /* Light border for a subtle effect */
+  }
+  
+  /* Title Styling */
+  .end-exam-card h1 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: #333;
+    font-weight: 600;
+  }
+  
+  /* Subtitle Text */
+  .end-exam-card p {
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+    color: #666;
+    font-weight: 500;
+  }
+  
+  /* Exit Button */
+  .exit-btn {
+    background: #007bff; /* Elegant Blue */
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Button Hover Effect */
+  .exit-btn:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 500px) {
+    .end-exam-card {
+      width: 90%;
+      padding: 30px;
+    }
+  }
+  
