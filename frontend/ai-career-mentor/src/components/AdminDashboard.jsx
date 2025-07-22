@@ -8,6 +8,7 @@ export const AdminDashboard = () => {
   const [examData, setExamData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [expandedRows, setExpandedRows] = useState({});
+  const [reportData, setReportData] = useState(null);
 
   useEffect(() => {
     fetchExamData();
@@ -33,14 +34,71 @@ export const AdminDashboard = () => {
     }));
   };
 
+  const deleteExam = async (examId) => {
+    try {
+      await axios.delete(`http://localhost:6500/api/exams/delete/${examId}`);
+      toast.success("Exam deleted successfully!");
+      fetchExamData(); // Refresh the list after deletion
+    } catch (error) {
+      console.error("Error deleting exam:", error);
+      toast.error("Failed to delete exam.");
+    }
+  };
+
+  const calculateRedundancy = (answer1, answer2) => {
+    if (!answer1 || !answer2) return 0;
+    const words1 = new Set(answer1.toLowerCase().split(/\s+/));
+    const words2 = new Set(answer2.toLowerCase().split(/\s+/));
+    const intersection = new Set([...words1].filter((word) => words2.has(word)));
+    const union = new Set([...words1, ...words2]);
+    return ((intersection.size / union.size) * 100).toFixed(2);
+  };
+
+  const checkReport = () => {
+    let reports = [];
+
+    // Group answers by question
+    let questionMap = new Map();
+
+    examData.forEach((exam) => {
+      exam.answers.forEach(({ question, response }) => {
+        if (!questionMap.has(question)) {
+          questionMap.set(question, []);
+        }
+        questionMap.get(question).push(response);
+      });
+    });
+
+    // Compare answers for each question
+    questionMap.forEach((responses, question) => {
+      for (let i = 0; i < responses.length - 1; i++) {
+        for (let j = i + 1; j < responses.length; j++) {
+          let score = calculateRedundancy(responses[i], responses[j]);
+          reports.push({
+            question,
+            response1: responses[i],
+            response2: responses[j],
+            redundancyScore: score,
+          });
+        }
+      }
+    });
+
+    if (reports.length === 0) {
+      toast.info("No redundancy found.");
+    } else {
+      setReportData(reports);
+      toast.success("Redundancy report generated!");
+    }
+  };
+
   return (
     <div className="admin-container">
       <aside className="admin-sidebar">
         <h2>Admin Panel</h2>
         <ul>
           <li><a href="/admin-dashboard">Dashboard</a></li>
-          <li><a href="#">Manage Users</a></li>
-          <li><a href="#">Reports</a></li>
+          <li><a href="/post-course">Post Courses</a></li>
           <li><a href="#">Settings</a></li>
           <li>
             <a href="/admin-login" onClick={() => localStorage.removeItem("adminToken")}>
@@ -61,6 +119,8 @@ export const AdminDashboard = () => {
                 <tr>
                   <th>Course</th>
                   <th>Actions</th>
+                  <th>Check Report</th>
+                  <th>Delete</th>
                 </tr>
               </thead>
               <tbody>
@@ -74,11 +134,18 @@ export const AdminDashboard = () => {
                             {expandedRows[exam._id] ? "Hide Answers" : "View Answers"}
                           </button>
                         </td>
+                        <td>
+                          <button onClick={checkReport}>Check Report</button>
+                        </td>
+                        <td>
+                          <button className="delete-btn" onClick={() => deleteExam(exam._id)}>
+                            Delete
+                          </button>
+                        </td>
                       </tr>
-
                       {expandedRows[exam._id] && (
                         <tr className="answer-row">
-                          <td colSpan="2">
+                          <td colSpan="4">
                             <div className="answer-container">
                               <h4>Answers:</h4>
                               <div className="scrollable-table">
@@ -87,7 +154,6 @@ export const AdminDashboard = () => {
                                     <tr>
                                       <th>Question</th>
                                       <th>Answer</th>
-                                      <th>Redundancy Score</th>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -96,12 +162,11 @@ export const AdminDashboard = () => {
                                         <tr key={index}>
                                           <td>{answer.question || "N/A"}</td>
                                           <td>{answer.response || "N/A"}</td>
-                                          <td>{answer.redundancyScore || "N/A"}%</td>
                                         </tr>
                                       ))
                                     ) : (
                                       <tr>
-                                        <td colSpan="3">No answers available</td>
+                                        <td colSpan="2">No answers available</td>
                                       </tr>
                                     )}
                                   </tbody>
@@ -115,11 +180,37 @@ export const AdminDashboard = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="3">No exam data available</td>
+                    <td colSpan="4">No exam data available</td>
                   </tr>
                 )}
               </tbody>
             </table>
+
+            {reportData && (
+              <div className="report-container">
+                <h3>Redundancy Report</h3>
+                <table className="report-table">
+                  <thead>
+                    <tr>
+                      <th>Question</th>
+                      <th>Response 1</th>
+                      <th>Response 2</th>
+                      <th>Redundancy Score</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {reportData.map((report, index) => (
+                      <tr key={index} className={`redundancy-score ${report.redundancyScore >= 100 ? "red" : report.redundancyScore >= 50 ? "yellow" : "green"}`}>
+                        <td>{report.question}</td>
+                        <td>{report.response1}</td>
+                        <td>{report.response2}</td>
+                        <td>{report.redundancyScore}%</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         )}
       </main>

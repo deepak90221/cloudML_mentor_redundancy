@@ -52,3 +52,24 @@ exports.getAllExams = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+// Delete an Exam
+exports.deleteExam = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Invalid exam ID format" });
+    }
+
+    const deletedExam = await Exam.findByIdAndDelete(id);
+    if (!deletedExam) {
+      return res.status(404).json({ message: "Exam not found" });
+    }
+
+    res.status(200).json({ message: "Exam deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting exam:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
